@@ -85,15 +85,5 @@ namespace MedicalProduct.BL.Controller
                 return db.Entry(CurrentMedicine).Property(u => u.Number).CurrentValue = N;
             };
         }
-        public void IdMed3()
-        {
-            using (var db = new MedicalProductContext())
-
-            {
-                var Med2 = db.Medicines.Where(t => true).ToList();
-                Med2.Clear();
-                db.SaveChanges();
-            }
-        }
     }
 }

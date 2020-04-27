@@ -13,10 +13,7 @@ namespace MedicalProduct.BL.Model
         /// Дата покупки.
         /// </summary>
         public DateTime Moment { get; set; }
-        /// <summary>
-        /// Список товаров данной покупки.
-        /// </summary>
-        public Dictionary<Medicine, int> Medicines { get; set; }
+
         /// <summary>
         /// Итоговая сумма затрат.
         /// </summary>
@@ -29,33 +26,34 @@ namespace MedicalProduct.BL.Model
         /// Пользователь, совершивший покупку.
         /// </summary>
         public virtual User User { get; set; }
+        public ICollection<PositionPurchase> PositionPurchases { get; set; }
         public Purchase() { }
         /// <summary>
         /// Создание покупки.
         /// </summary>
         /// <param name="user">Пользователь регистрирующий покупку.</param>
         /// <param name="moment">Дата покупки.</param>
-        public Purchase(User user, DateTime moment)
-        {
-            User = user ?? throw new ArgumentException("Не удалось идентифицировать пользователя.",nameof(user));
-            if(moment < DateTime.Parse("01.01.2020") || moment > DateTime.Now)
-            {
-                throw new ArgumentException("Недопустимая дата покупки.", nameof(moment));
-            }
-            Moment = moment;
-        }
+        //public Purchase(User user, DateTime moment)
+        //{
+        //    User = user ?? throw new ArgumentException("Не удалось идентифицировать пользователя.",nameof(user));
+        //    if(moment < DateTime.Parse("01.01.2020") || moment > DateTime.Now)
+        //    {
+        //        throw new ArgumentException("Недопустимая дата покупки.", nameof(moment));
+        //    }
+        //    Moment = moment;
+        //}
 
-        public Purchase(User user, DateTime moment, Dictionary<Medicine, int> medicines, decimal total)
-        {
-            User = user ?? throw new ArgumentException("Не удалось идентифицировать пользователя.", nameof(user));
-            if (moment < DateTime.Parse("01.01.2020") || moment > DateTime.Now)
-            {
-                throw new ArgumentException("Недопустимая дата покупки.", nameof(moment));
-            }
-            Moment = moment;
-            Medicines = medicines;
-            Total = total;
-        }
+        //public Purchase(User user, DateTime moment, Dictionary<Medicine, int> medicines, decimal total)
+        //{
+        //    User = user ?? throw new ArgumentException("Не удалось идентифицировать пользователя.", nameof(user));
+        //    if (moment < DateTime.Parse("01.01.2020") || moment > DateTime.Now)
+        //    {
+        //        throw new ArgumentException("Недопустимая дата покупки.", nameof(moment));
+        //    }
+        //    Moment = moment;
+        //    Medicines = medicines;
+        //    Total = total;
+        //}
 
         public override string ToString()
         {

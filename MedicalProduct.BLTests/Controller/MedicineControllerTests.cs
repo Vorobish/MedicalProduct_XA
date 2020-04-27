@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MedicalProduct.BLTests.Controller;
-using MedicalProduct.BL.Model;
 
 namespace MedicalProduct.BL.Controller.Tests
 {

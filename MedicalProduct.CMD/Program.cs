@@ -24,12 +24,12 @@ namespace MedicalProduct.CMD
                 Console.WriteLine();
                 Console.WriteLine("Какое действие Вы хотите выполнить?");
                 Console.WriteLine("A - Закрыть приложение.");
-                Console.WriteLine("B - Посмотреть список изделий медицинского назначения.НЕТ");
+                Console.WriteLine("B - Посмотреть список изделий медицинского назначения.");
                 Console.WriteLine("С - Добавить новую покупки.НЕТ");
                 Console.WriteLine("D - Найти и посмотреть конкретное изделие медицинского назначения.НЕТ");
                 Console.WriteLine("E - Посмотреть список покупок.НЕТ");
                 Console.WriteLine("F - Найти и посмотреть конкретную покупку.НЕТ");
-                Console.WriteLine("G - Добавить изделие медицинского назначения в аптечку.НЕТ");
+                Console.WriteLine("G - Добавить изделие медицинского назначения в аптечку.");
                 Console.WriteLine("H - Изменить количество единиц препарата в аптечке.НЕТ");
                 Console.WriteLine();
 
@@ -43,62 +43,51 @@ namespace MedicalProduct.CMD
                         Environment.Exit(0);
                         break;
                     #endregion
-                    //case ConsoleKey.S: //Посмотреть список всех покупок.
-                    //    var purchaseShow = new PurchaseController();
-                    //    purchaseShow.Show();
-                    //    break;
-                    //case ConsoleKey.P: //Добавить новую покупку.
-                    //    var moment = ParseDare("покупки");
-                    //    var purchaseController = new PurchaseController(userName, moment);
-                    //    Console.WriteLine("Заполняем список препаратов.");
-                    //    var numOfPosition = ParseInt("Количество позиций в чеке");
-                    //    if (numOfPosition > 50)
-                    //    {
-                    //        throw new ArgumentException("Значение не должно превышать 50 позиций", nameof(numOfPosition));
-                    //    }
-                    //    for (var i = 0; i < numOfPosition; i++)
-                    //    {
-                    //        Console.WriteLine("Введите наименование изделия медицинского назначения.");
-                    //        var nameMedicines = Console.ReadLine();
-                    //        var price = ParseDecimal("Цена за упаковку.");
-                    //        var number = ParseInt("Количество единиц в упаковке.");
-                    //        var quantity = ParseInt("Количество упаковок");
-                    //        var components = new List<Component>();
-                    //    }
+                    #region B - Посмотреть список изделий медицинского назначения.
+                    case ConsoleKey.B:
+                        var medicineShow = new MedicineController();
+                        medicineShow.Show();
+                        break;
+                    #endregion
 
-                    //    break;
                     #region G - Добавить изделие медицинского назначения в аптечку.
-                    //case ConsoleKey.G:
-                    //    Console.WriteLine("Введите наименование изделия медицинского назначения.");
-                    //    var medicineName = Console.ReadLine();
-                    //    var number = ParseInt("Количество единиц препарата.");
-                    //    var medicineController = new MedicineController(medicineName, number);
-                        ////Заполнение компонентов и показаний к применению, если лекарство новое.
-                        //if (medicineController.IsNewMedicine == true)
-                        //{
-                        //    //Компоненты.
-                        //    Console.WriteLine("Заполняем состав медицинского изделия. Когда компоненты закончатся вместо наименования введите - 0.");
-                        //    Console.WriteLine("Введите наименование компонента.");
-                        //    string componentName = Console.ReadLine();
-                        //    while (componentName == "0")
-                        //    {
-                        //        var componentController = new ComponentController(componentName);
-                        //        componentController.CurrentComponent.MedicineId = medicineController.CurrentMedicine.Id;
-                        //        componentController.Save();
-                        //    }
-                        //    //Показания к применению.
-                        //    Console.WriteLine("Заполняем показания к применению. Когда список закончится вместо наименования введите - 0.");
-                        //    Console.WriteLine("Введите наименование показания.");
-                        //    string indicationName = Console.ReadLine();
-                        //    while (indicationName == "0")
-                        //    {
-                        //        var indicationController = new IndicationsForUseController(indicationName);
-                        //        indicationController.CurrentIndicationsForUse.MedicineId = medicineController.CurrentMedicine.Id;
-                        //        indicationController.Save();
-                        //    }
-                        //    Console.WriteLine($"{medicineController.CurrentMedicine} создан. ");
-                        //}
-                        //break;
+                    case ConsoleKey.G:
+                        Console.WriteLine("Введите наименование изделия медицинского назначения.");
+                        var medicineName = Console.ReadLine();
+                        var number = ParseInt("Количество единиц препарата.");
+                        var medicineController = new MedicineController(medicineName, number);
+                        //Заполнение компонентов и показаний к применению, если лекарство новое.
+                        if (medicineController.IsNewMedicine == true)
+                        {
+                            //Компоненты.
+                            Console.WriteLine("Заполняем состав медицинского изделия.");
+                            var numberOfComponents = ParseInt("Количество компонентов в составе.");
+                            for(var i =0; i<numberOfComponents; i++)
+                            {
+                                Console.WriteLine("Введите наименование компонента.");
+                                var componentName = Console.ReadLine();
+                                var componentController = new ComponentController(componentName);
+                                componentController.CurrentComponent.MedicineId = medicineController.CurrentMedicine.Id;
+                                componentController.Save();
+                            }
+                            //Показания к применению.
+                            Console.WriteLine("Заполняем показания к применению.");
+                            var numberOfIndications = ParseInt("Количество показаний к применению.");
+                            for (var i = 0; i < numberOfIndications; i++)
+                            {
+                                Console.WriteLine("Введите наименование показания.");
+                                string indicationName = Console.ReadLine();
+                                var indicationController = new IndicationsForUseController(indicationName);
+                                indicationController.CurrentIndicationsForUse.MedicineId = medicineController.CurrentMedicine.Id;
+                                indicationController.Save();
+                            }
+                            Console.WriteLine($"{medicineController.CurrentMedicine.Name} создан. ");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Препарат добавлен. Итоговое количество = {medicineController.CurrentMedicine.Number}");
+                        }
+                        break;
                         #endregion
                 }
             }

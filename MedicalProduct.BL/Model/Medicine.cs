@@ -9,7 +9,6 @@ namespace MedicalProduct.BL.Model
     /// </summary>
     public class Medicine
     {
-        [Key]
         public int Id { get; set; }
         /// <summary>
         /// Наименование изделия медицинского назначения.
@@ -27,6 +26,7 @@ namespace MedicalProduct.BL.Model
         /// Показания к применению.
         /// </summary>
         public ICollection<IndicationsForUse> IndicationsForUseInMedicine { get; set; }
+
         public Medicine() { }
         /// <summary>
         /// Создание изделия медицинского назначения (по 2 критериям).

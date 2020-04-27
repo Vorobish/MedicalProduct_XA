@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MedicalProduct.BL.Model
 {
@@ -8,10 +9,6 @@ namespace MedicalProduct.BL.Model
     public class PositionPurchase
     {
         public int Id { get; set; }
-        /// <summary>
-        /// Покупка, которой принадлежит позиция.
-        /// </summary>
-        public Purchase Purchase { get; set; }
         /// <summary>
         /// Покупаемый препарат.
         /// </summary>
@@ -28,6 +25,8 @@ namespace MedicalProduct.BL.Model
         /// Количество упаковок.
         /// </summary>
         public int Quantity { get; set; }
+        public int PurchaseId { get; set; }
+        public virtual Purchase Purchase { get; set; }
         public PositionPurchase() { }
         /// <summary>
         /// Создание позиции в покупке.

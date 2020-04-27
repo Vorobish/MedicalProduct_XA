@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MedicalProduct.BL.Model
 {
@@ -12,6 +13,7 @@ namespace MedicalProduct.BL.Model
         /// Имя пользователя.
         /// </summary>
         public string Name { get; set; }
+        public ICollection<Purchase> PurchasesUser { get; set; }
         public User() { }
         /// <summary>
         /// Создание нового пользователя.
