@@ -44,7 +44,7 @@ namespace MedicalProduct.BL.Controller
             }
             else
             {
-                CurrentMedicine.Number = СhangeNumber(number);
+                CurrentMedicine.Number = СhangeAddNumber(number);
                 Saver();
             }
         }
@@ -76,7 +76,7 @@ namespace MedicalProduct.BL.Controller
         /// </summary>
         /// <param name="num">Количество прибавляемых единиц.</param>
         /// <returns>Итоговое количество единиц препарата в аптечке.</returns>
-        private int СhangeNumber(int num)
+        private int СhangeAddNumber(int num)
         {
             using (var db = new MedicalProductContext())
             {
@@ -85,6 +85,10 @@ namespace MedicalProduct.BL.Controller
                 return db.Entry(CurrentMedicine).Property(u => u.Number).CurrentValue = N;
             };
         }
+        /// <summary>
+        /// Показать конкретный препарат полностью (состав, показания к прменению).
+        /// </summary>
+        /// <param name="id">Id конкретного препарата.</param>
         public void ShowOne(int id)
         {
             using (var db = new MedicalProductContext())
@@ -103,6 +107,18 @@ namespace MedicalProduct.BL.Controller
                 {
                     Console.Write(item.ToString());
                 }
+            };
+        }
+
+        public void ChangeNumber(int id, int num)
+        {
+            //TODO: ПРОВЕРКА
+            using (var db = new MedicalProductContext())
+            {
+                Medicine med = db.Medicines.SingleOrDefault(m => m.Id == id);
+                db.Entry(med).Property(u => u.Number).CurrentValue = num;
+                db.SaveChanges();
+                Console.Write(med.ToString());
             };
         }
     }

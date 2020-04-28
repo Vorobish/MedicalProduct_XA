@@ -27,10 +27,10 @@ namespace MedicalProduct.CMD
                 Console.WriteLine("B - Посмотреть список изделий медицинского назначения.");
                 Console.WriteLine("С - Добавить новую покупки.НЕТ");
                 Console.WriteLine("D - Найти и посмотреть конкретное изделие медицинского назначения по Id.");
-                Console.WriteLine("E - Посмотреть список покупок.НЕТ");
+                Console.WriteLine("E - Посмотреть список покупок.");
                 Console.WriteLine("F - Найти и посмотреть конкретную покупку.НЕТ");
                 Console.WriteLine("G - Добавить изделие медицинского назначения в аптечку.");
-                Console.WriteLine("H - Изменить количество единиц препарата в аптечке.НЕТ");
+                Console.WriteLine("H - Изменить количество единиц препарата в аптечке.");
                 Console.WriteLine();
 
                 var key = Console.ReadKey();
@@ -56,7 +56,12 @@ namespace MedicalProduct.CMD
                         showOne.ShowOne(currentMedicineID);
                         break;
                     #endregion
-
+                    #region E - Посмотреть список покупок.
+                    case ConsoleKey.E:
+                        var purchase = new PurchaseController();
+                        purchase.Show();
+                        break;
+                    #endregion
                     #region G - Добавить изделие медицинского назначения в аптечку.
                     case ConsoleKey.G:
                         Console.WriteLine("Введите наименование изделия медицинского назначения.");
@@ -94,6 +99,14 @@ namespace MedicalProduct.CMD
                         {
                             Console.WriteLine($"Препарат добавлен. Итоговое количество = {medicineController.CurrentMedicine.Number}");
                         }
+                        break;
+                    #endregion
+                    #region H - Изменить количество единиц препарата в аптечке по Id.
+                    case ConsoleKey.H:
+                        var medicineID = ParseInt("Id изделия медицинского назначения.");
+                        var changeNumber = ParseInt("Итоговое количество единиц препарата.");
+                        var change = new MedicineController();
+                        change.ChangeNumber(medicineID, changeNumber);
                         break;
                         #endregion
                 }
