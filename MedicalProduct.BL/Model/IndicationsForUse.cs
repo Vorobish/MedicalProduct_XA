@@ -30,7 +30,7 @@ namespace MedicalProduct.BL.Model
         }
         public override string ToString()
         {
-            return $"Наименование показания к применению: {Name}, Id недуга: {Id}, Id препарата: {MedicineId}\n";
+            return $"{Name}\n";
         }
 
     }

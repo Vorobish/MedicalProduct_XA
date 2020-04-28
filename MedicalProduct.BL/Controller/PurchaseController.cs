@@ -37,11 +37,22 @@ namespace MedicalProduct.BL.Controller
             var dictionary = new Dictionary<Medicine, int>();
             
         }
-
+        /// <summary>
+        /// Показать список покупок.
+        /// </summary>
         public void Show()
         {
             Console.WriteLine("Список покупок:");
             Show<Purchase>();
+        }
+
+        /// <summary>
+        /// Отчистить таблицу покупок.
+        /// </summary>
+        public void RemoveRange()
+        {
+            RemoveRange<Purchase>();
+            Console.WriteLine("Все покупки удалены.");
         }
     }
 }

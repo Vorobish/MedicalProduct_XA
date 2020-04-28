@@ -1,17 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MedicalProduct.BL.Controller;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MedicalProduct.BLTests.Controller;
-using MedicalProduct.BL.Model;
 
 namespace MedicalProduct.BL.Controller.Tests
 {
     [TestClass()]
-    public class UserControllerTests : DataBaseManagerTest
+    public class UserControllerTests : DataBaseManager
     {
         [TestMethod()]
         public void UserControllerTest()

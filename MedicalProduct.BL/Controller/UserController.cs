@@ -57,6 +57,21 @@ namespace MedicalProduct.BL.Controller
         {
             return Load<User>();
         }
-
+        /// <summary>
+        /// Вывод общего списка пользователей.
+        /// </summary>
+        public void Show()
+        {
+            Console.WriteLine("Все пользователи:");
+            Show<User>();
+        }
+        /// <summary>
+        /// Отчистить таблицу пользователей.
+        /// </summary>
+        public void RemoveRange()
+        {
+            RemoveRange<User>();
+            Console.WriteLine("Все пользователи удалены.");
+        }
     }
 }

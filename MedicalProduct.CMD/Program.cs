@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace MedicalProduct.CMD
 {
-    public class Program : DataBaseManager
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -26,7 +26,7 @@ namespace MedicalProduct.CMD
                 Console.WriteLine("A - Закрыть приложение.");
                 Console.WriteLine("B - Посмотреть список изделий медицинского назначения.");
                 Console.WriteLine("С - Добавить новую покупки.НЕТ");
-                Console.WriteLine("D - Найти и посмотреть конкретное изделие медицинского назначения.НЕТ");
+                Console.WriteLine("D - Найти и посмотреть конкретное изделие медицинского назначения по Id.");
                 Console.WriteLine("E - Посмотреть список покупок.НЕТ");
                 Console.WriteLine("F - Найти и посмотреть конкретную покупку.НЕТ");
                 Console.WriteLine("G - Добавить изделие медицинского назначения в аптечку.");
@@ -47,6 +47,13 @@ namespace MedicalProduct.CMD
                     case ConsoleKey.B:
                         var medicineShow = new MedicineController();
                         medicineShow.Show();
+                        break;
+                    #endregion
+                    #region D - Найти и посмотреть конкретное изделие медицинского назначения.
+                    case ConsoleKey.D:
+                        var currentMedicineID = ParseInt("Id изделия медицинского назначения.");
+                        var showOne = new MedicineController();
+                        showOne.ShowOne(currentMedicineID);
                         break;
                     #endregion
 
@@ -110,7 +117,7 @@ namespace MedicalProduct.CMD
             }
         }
 
-        private static DateTime ParseDare(string name)
+        private static DateTime ParseDate(string name)
         {
             while (true)
             {

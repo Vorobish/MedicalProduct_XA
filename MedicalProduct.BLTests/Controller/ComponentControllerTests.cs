@@ -1,16 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MedicalProduct.BL.Controller;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MedicalProduct.BLTests.Controller;
 
 namespace MedicalProduct.BL.Controller.Tests
 {
     [TestClass()]
-    public class ComponentControllerTests : DataBaseManagerTest
+    public class ComponentControllerTests : DataBaseManager
     {
         [TestMethod()]
         public void ComponentControllerTest()
@@ -25,16 +20,17 @@ namespace MedicalProduct.BL.Controller.Tests
         [TestMethod()]
         public void SaveTest()
         {
+            var medicineController = new MedicineController("Test",5);
             string name = Guid.NewGuid().ToString();
 
             var componentController = new ComponentController(name);
-
+            componentController.CurrentComponent.MedicineId = medicineController.CurrentMedicine.Id;
             componentController.Save();
 
             string name2 = Guid.NewGuid().ToString();
 
             var componentController2 = new ComponentController(name2);
-
+            componentController2.CurrentComponent.MedicineId = medicineController.CurrentMedicine.Id;
             var result = componentController2.Components.SingleOrDefault(r => r.Name == name);
 
             Assert.AreEqual(result.ToString(), componentController.CurrentComponent.ToString());

@@ -65,9 +65,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Controller\ComponentControllerTests.cs" />
-    <Compile Include="Controller\DataBaseManagerTest.cs" />
     <Compile Include="Controller\IndicationsForUseControllerTests.cs" />
-    <Compile Include="Controller\MedicalProductContextTests.cs" />
     <Compile Include="Controller\MedicineControllerTests.cs" />
     <Compile Include="Controller\UserControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

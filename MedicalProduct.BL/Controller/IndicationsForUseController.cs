@@ -57,16 +57,22 @@ namespace MedicalProduct.BL.Controller
         {
             return Load<IndicationsForUse>();
         }
-        //Нужно?
-        public void IdMed2()
+        /// <summary>
+        /// Вывести список показаний.
+        /// </summary>
+        public void Show()
         {
-            using (var db = new MedicalProductContext())
+            Console.WriteLine("Общий список показаний к применению:");
+            Show<IndicationsForUse>();
+        }
 
-            {
-                var Ind2 = db.IndicationsForUses.Where(t => true).ToList();
-                Ind2.Clear();
-                db.SaveChanges();
-            }
+        /// <summary>
+        /// Отчистить таблицу недугов.
+        /// </summary>
+        public void RemoveRange()
+        {
+            RemoveRange<IndicationsForUse>();
+            Console.WriteLine("Все недуги удалены.");
         }
     }
 }

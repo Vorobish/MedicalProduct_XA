@@ -85,5 +85,25 @@ namespace MedicalProduct.BL.Controller
                 return db.Entry(CurrentMedicine).Property(u => u.Number).CurrentValue = N;
             };
         }
+        public void ShowOne(int id)
+        {
+            using (var db = new MedicalProductContext())
+            {
+                Medicine med = db.Medicines.SingleOrDefault(m => m.Id == id);
+                Console.Write(med.ToString());
+                Console.WriteLine("Состав:");
+                List<Component> comps = db.Components.Where(c => c.MedicineId == id).ToList();
+                foreach(var item in comps)
+                {
+                    Console.Write(item.ToString());
+                }
+                Console.WriteLine("Показания к применению:");
+                List<IndicationsForUse> inds = db.IndicationsForUses.Where(c => c.MedicineId == id).ToList();
+                foreach (var item in inds)
+                {
+                    Console.Write(item.ToString());
+                }
+            };
+        }
     }
 }

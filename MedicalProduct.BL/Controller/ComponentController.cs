@@ -56,16 +56,22 @@ namespace MedicalProduct.BL.Controller
         {
             return Load<Component>();
         }
-        //Нужно?
-        public void IdMed()
+        /// <summary>
+        /// Вывести общий спиок компонентов.
+        /// </summary>
+        public void Show()
         {
-            using (var db = new MedicalProductContext())
+            Console.WriteLine("Общий список компонентов:");
+            Show<Component>();
+        }
 
-            {
-                var Components2 = db.Components.Where(t => true).ToList();
-                Components2.Clear();
-                db.SaveChanges();
-            }
+        /// <summary>
+        /// Отчистить таблицу компонентов.
+        /// </summary>
+        public void RemoveRange()
+        {
+            RemoveRange<Component>();
+            Console.WriteLine("Все компоненты удалены.");
         }
     }
 }

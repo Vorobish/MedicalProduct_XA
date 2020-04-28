@@ -56,5 +56,17 @@ namespace MedicalProduct.BL.Controller
                 }
             };
         }
+        /// <summary>
+        /// Отчистить таблицу.
+        /// </summary>
+        /// <typeparam name="T">Класс таблицы.</typeparam>
+        protected void RemoveRange<T>() where T : class
+        {
+            using (var db = new MedicalProductContext())
+            {
+                db.Set<T>().RemoveRange(db.Set<T>());
+                db.SaveChanges();
+            }
+        }
     }
 }
