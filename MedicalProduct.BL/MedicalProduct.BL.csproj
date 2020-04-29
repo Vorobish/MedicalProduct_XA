@@ -59,6 +59,7 @@
     <Compile Include="Controller\IndicationsForUseController.cs" />
     <Compile Include="Controller\MedicalProductContext.cs" />
     <Compile Include="Controller\MedicineController.cs" />
+    <Compile Include="Controller\PositionController.cs" />
     <Compile Include="Controller\PurchaseController.cs" />
     <Compile Include="Controller\UserController.cs" />
     <Compile Include="Migrations\Configuration.cs" />

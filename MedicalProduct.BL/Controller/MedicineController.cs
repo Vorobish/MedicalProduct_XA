@@ -94,6 +94,10 @@ namespace MedicalProduct.BL.Controller
             using (var db = new MedicalProductContext())
             {
                 Medicine med = db.Medicines.SingleOrDefault(m => m.Id == id);
+                if(med == null)
+                {
+                    throw new ArgumentException($"Изделие медицинского назначения с Id: {id} не найдено.", nameof(id)) ;
+                }
                 Console.Write(med.ToString());
                 Console.WriteLine("Состав:");
                 List<Component> comps = db.Components.Where(c => c.MedicineId == id).ToList();
@@ -112,10 +116,17 @@ namespace MedicalProduct.BL.Controller
 
         public void ChangeNumber(int id, int num)
         {
-            //TODO: ПРОВЕРКА
+            if (num <= 0 || num > 600)
+            {
+                throw new ArgumentException("Количество не может быть отрицательным, и не должно быть больше 600 единиц.", nameof(num));
+            }
             using (var db = new MedicalProductContext())
             {
                 Medicine med = db.Medicines.SingleOrDefault(m => m.Id == id);
+                if (med == null)
+                {
+                    throw new ArgumentException($"Изделие медицинского назначения с Id: {id} не найдено.", nameof(id));
+                }
                 db.Entry(med).Property(u => u.Number).CurrentValue = num;
                 db.SaveChanges();
                 Console.Write(med.ToString());
