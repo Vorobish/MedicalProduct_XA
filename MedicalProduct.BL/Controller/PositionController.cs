@@ -4,9 +4,18 @@ using System.Collections.Generic;
 
 namespace MedicalProduct.BL.Controller
 {
+    /// <summary>
+    /// Контроллер ввода позиций чека.
+    /// </summary>
     public class PositionController : DataBaseManager
     {
+        /// <summary>
+        /// Конкретная позиция.
+        /// </summary>
         public PositionPurchase CurrentPosition { get; set; }
+        /// <summary>
+        /// Общий список позиций.
+        /// </summary>
         public List<PositionPurchase> Positions { get; set; }
         public PositionController() { }
         /// <summary>
@@ -45,11 +54,17 @@ namespace MedicalProduct.BL.Controller
         {
             return Load<PositionPurchase>();
         }
+        /// <summary>
+        /// Показать общий список позиций.
+        /// </summary>
         public void Show()
         {
             Console.WriteLine("Общий список позиций:");
             Show<PositionPurchase>();
         }
+        /// <summary>
+        /// Удалить список позиций.
+        /// </summary>
         public void RemoveRange()
         {
             RemoveRange<PositionPurchase>();

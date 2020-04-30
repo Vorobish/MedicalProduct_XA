@@ -1,7 +1,6 @@
 ﻿using MedicalProduct.BL.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MedicalProduct.BL.Controller
 {
@@ -25,9 +24,9 @@ namespace MedicalProduct.BL.Controller
         /// </summary>
         public ComponentController(Medicine medicine, string componentName)
         {
-            if (string.IsNullOrWhiteSpace(componentName))
+            if (string.IsNullOrWhiteSpace(componentName) || componentName.Length > 100)
             {
-                throw new ArgumentNullException("Наименование компонента не может быть пустым.", nameof(componentName));
+                throw new ArgumentNullException("Наименование компонента не может быть пустым и не должно превышать 100 знаков.", nameof(componentName));
             }
 
             Components = GetAllComponents();

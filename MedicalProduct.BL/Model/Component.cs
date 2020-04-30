@@ -22,9 +22,9 @@ namespace MedicalProduct.BL.Model
         /// <param name="name">Наименование компонента.</param>
         public Component(Medicine medicine, string name)
         {
-            if(string.IsNullOrWhiteSpace(name))
+            if(string.IsNullOrWhiteSpace(name) || name.Length > 100)
             {
-                throw new ArgumentNullException("Наименование компонента не может быть пустым.", nameof(name));
+                throw new ArgumentNullException("Наименование компонента не может быть пустым и не должно превышать 100 знаков.", nameof(name));
             }
             Name = name;
             MedicineId = medicine.Id;

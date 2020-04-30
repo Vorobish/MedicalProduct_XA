@@ -10,9 +10,10 @@ namespace MedicalProduct.BL.Controller.Tests
         [TestMethod()]
         public void IndicationsForUseControllerTest()
         {
+            var med = new MedicineController("Test1",6);
             string name = Guid.NewGuid().ToString();
 
-            var indicationController = new IndicationsForUseController(name);
+            var indicationController = new IndicationsForUseController(med.CurrentMedicine, name);
 
             Assert.AreEqual(name, indicationController.CurrentIndicationsForUse.Name);
         }
@@ -20,18 +21,17 @@ namespace MedicalProduct.BL.Controller.Tests
         [TestMethod()]
         public void SaveTest()
         {
-            var medicineController = new MedicineController("Test", 5);
+            var medicineController = new MedicineController("Test2", 5);
             string name = Guid.NewGuid().ToString();
 
-            var indicationController = new IndicationsForUseController(name);
-            indicationController.CurrentIndicationsForUse.MedicineId = medicineController.CurrentMedicine.Id;
+            var indicationController = new IndicationsForUseController(medicineController.CurrentMedicine, name);
             indicationController.Save();
 
             string name2 = Guid.NewGuid().ToString();
 
-            var indicationController2 = new IndicationsForUseController(name2);
+            var indicationController2 = new IndicationsForUseController(medicineController.CurrentMedicine, name2);
 
-            var result = indicationController2.IndicationsForUses.SingleOrDefault(r => r.Name == name);
+            var result = indicationController2.IndicationsForUses.FirstOrDefault(r => r.Name == name);
 
             Assert.AreEqual(result.ToString(), indicationController.CurrentIndicationsForUse.ToString());
         }
@@ -39,11 +39,12 @@ namespace MedicalProduct.BL.Controller.Tests
         [TestMethod()]
         public void GetAllIndicationsForUsesTest()
         {
+            var med = new MedicineController("Test3",9);
             string name = Guid.NewGuid().ToString();
 
-            var indicationController = new IndicationsForUseController(name);
+            var indicationController = new IndicationsForUseController(med.CurrentMedicine, name);
 
-            Assert.IsTrue(indicationController.IsNewIndicationsForUse);
+            Assert.AreEqual(med.CurrentMedicine.Id, indicationController.CurrentIndicationsForUse.MedicineId);
         }
     }
 }

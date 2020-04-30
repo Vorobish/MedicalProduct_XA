@@ -22,9 +22,9 @@ namespace MedicalProduct.BL.Controller
         public MedicineController() { }
         public MedicineController(string medicineName, int number)
         {
-            if (string.IsNullOrWhiteSpace(medicineName))
+            if (string.IsNullOrWhiteSpace(medicineName) || medicineName.Length > 100)
             {
-                throw new ArgumentNullException("Наименование препарата не может быть пустым.", nameof(medicineName));
+                throw new ArgumentNullException("Наименование изделия медицинского назначения не может быть пустым и не должно превышать 100 знаков.", nameof(medicineName));
             }
 
             if (number <= 0 || number > 300)
@@ -113,7 +113,11 @@ namespace MedicalProduct.BL.Controller
                 }
             };
         }
-
+        /// <summary>
+        /// Изменить количество единиц препарата в аптечке.
+        /// </summary>
+        /// <param name="id">Id препарата.</param>
+        /// <param name="num">Итоговое значение единиц препарата в аптечке.</param>
         public void ChangeNumber(int id, int num)
         {
             if (num < 0 || num > 600)

@@ -26,9 +26,9 @@ namespace MedicalProduct.BL.Controller
         /// </summary>
         public UserController(string userName)
         {
-            if (string.IsNullOrWhiteSpace(userName))
+            if (string.IsNullOrWhiteSpace(userName) || userName.Length > 100)
             {
-                throw new ArgumentNullException("Имя пользователя не может быть пустым.", nameof(userName));
+                throw new ArgumentNullException("Имя пользователя не может быть пустым и не должно превышать 100 знаков.", nameof(userName));
             }
 
             Users = GetAllUsers();

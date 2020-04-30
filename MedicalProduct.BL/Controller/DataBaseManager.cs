@@ -1,5 +1,4 @@
-﻿using MedicalProduct.BL.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -34,7 +33,7 @@ namespace MedicalProduct.BL.Controller
             }
         }
         /// <summary>
-        /// Показать списка элементов.
+        /// Показать список элементов.
         /// </summary>
         protected void Show<T>() where T: class
         {

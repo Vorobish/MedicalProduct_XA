@@ -21,9 +21,9 @@ namespace MedicalProduct.BL.Model
         /// <param name="name">Имя пользователя.</param>
         public User(string name)
         {
-            if(string.IsNullOrWhiteSpace(name))
+            if(string.IsNullOrWhiteSpace(name) || name.Length > 100)
             {
-                throw new ArgumentNullException("Имя пользователя не может пустым.", nameof(name));
+                throw new ArgumentNullException("Имя пользователя не может пустым и не должно превышать 100 знаков.", nameof(name));
             }
 
             Name = name;

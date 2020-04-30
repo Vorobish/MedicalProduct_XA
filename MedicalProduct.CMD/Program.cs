@@ -1,8 +1,5 @@
 ﻿using MedicalProduct.BL.Controller;
-using MedicalProduct.BL.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace MedicalProduct.CMD
 {
@@ -10,26 +7,6 @@ namespace MedicalProduct.CMD
     {
         static void Main(string[] args)
         {
-            //var u = new UserController();
-            //u.Show();
-            //u.RemoveRange();
-            //var pur = new PurchaseController();
-            //pur.Show();
-            //pur.RemoveRange();
-            //var med = new MedicineController();
-            //med.Show();
-            //med.RemoveRange();
-            //var comp = new ComponentController();
-            //comp.Show();
-            //comp.RemoveRange();
-            //var ind = new IndicationsForUseController();
-            //ind.Show();
-            //ind.RemoveRange();
-            //var pos = new PositionController();
-            //pos.Show();
-            //pos.RemoveRange();
-
-
             Console.WriteLine("Вас приветствует приложение MedicalProduct!");
             Console.WriteLine("Введите, пожалуйста, Ваше имя.");
             var userName = Console.ReadLine();
@@ -69,7 +46,7 @@ namespace MedicalProduct.CMD
                         medicineShow.Show();
                         break;
                     #endregion
-                    #region С - Добавить новую покупку.НЕЕЕЕЕЕЕЕТ
+                    #region С - Добавить новую покупку.
                     case ConsoleKey.C:
                         var moment = ParseDate("покупки.");
                         var purchaseController = new PurchaseController(userController.CurrentUser, moment);

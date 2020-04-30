@@ -22,7 +22,6 @@ namespace MedicalProduct.BL.Model
         /// ID Пользователя, совершившего покупку.
         /// </summary>
         public int UserId { get; set; }
-        public string UserName { get; set; }
 
         /// <summary>
         /// Пользователь, совершивший покупку.
@@ -43,12 +42,11 @@ namespace MedicalProduct.BL.Model
             }
             Moment = moment;
             UserId = user.Id;
-            UserName = user.Name;
         }
 
         public override string ToString()
         {
-            return $"Покупка №: {Id} ({UserName}), дата покупки: {Moment}, сумма чека: {Total}\n";
+            return $"Покупка №: {Id} ({User.Name}), дата покупки: {Moment}, сумма чека: {Total}\n";
         }
     }
 

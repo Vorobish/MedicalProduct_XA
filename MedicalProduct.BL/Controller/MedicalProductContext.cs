@@ -1,5 +1,4 @@
 ﻿using MedicalProduct.BL.Model;
-using System;
 using System.Data.Entity;
 
 namespace MedicalProduct.BL.Controller

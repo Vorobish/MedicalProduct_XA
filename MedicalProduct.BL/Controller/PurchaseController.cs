@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace MedicalProduct.BL.Controller
 {
+    /// <summary>
+    /// Контроллер создания покупки.
+    /// </summary>
     public class PurchaseController : DataBaseManager
     {
         /// <summary>
@@ -25,7 +28,10 @@ namespace MedicalProduct.BL.Controller
             Purchases.Add(CurrentPurchase);
             Save();            
         }
-
+        /// <summary>
+        /// Получение списка покупок.
+        /// </summary>
+        /// <returns>Общий список покупок.</returns>
         private List<Purchase> GetAllPurchases()
         {
             return Load<Purchase>();
@@ -75,7 +81,10 @@ namespace MedicalProduct.BL.Controller
                 db.SaveChanges();
             };
         }
-
+        /// <summary>
+        /// Показать расширенно конкретную покупку.
+        /// </summary>
+        /// <param name="id">Id покупки.</param>
         public void ShowOne(int id)
         {
             using (var db = new MedicalProductContext())

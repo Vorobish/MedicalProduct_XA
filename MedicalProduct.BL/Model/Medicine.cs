@@ -37,9 +37,9 @@ namespace MedicalProduct.BL.Model
         /// <param name="indicationsForUses">Показания к применению.</param>
         public Medicine(string name, int number) 
         { 
-            if(string.IsNullOrWhiteSpace(name))
+            if(string.IsNullOrWhiteSpace(name) || name.Length > 100)
             {
-                throw new ArgumentNullException("Наименование изделия медицинского назначения не может быть пустым.",nameof(name));
+                throw new ArgumentNullException("Наименование изделия медицинского назначения не может быть пустым и не должно превышать 100 знаков.",nameof(name));
             }
             if(number < 0 || number > 200)
             {

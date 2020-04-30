@@ -9,6 +9,9 @@ namespace MedicalProduct.BL.Model
     public class PositionPurchase
     {
         public int Id { get; set; }
+        /// <summary>
+        /// Наименование препарата.
+        /// </summary>
         public string MedicineName { get; set; }
         /// <summary>
         /// Цена за 1 упаковку.
@@ -18,6 +21,9 @@ namespace MedicalProduct.BL.Model
         /// Количество упаковок.
         /// </summary>
         public int Quantity { get; set; }
+        /// <summary>
+        /// Сумма позиции.
+        /// </summary>
         public decimal TotalPosition { get; set; }
         public int PurchaseId { get; set; }
         public virtual Purchase Purchase { get; set; }

@@ -10,9 +10,10 @@ namespace MedicalProduct.BL.Controller.Tests
         [TestMethod()]
         public void ComponentControllerTest()
         {
+            var med = new MedicineController("Test1", 7);
             string сomponentName = Guid.NewGuid().ToString();
 
-            var componentController = new ComponentController(сomponentName);
+            var componentController = new ComponentController(med.CurrentMedicine, сomponentName);
 
             Assert.AreEqual(сomponentName, componentController.CurrentComponent.Name);
         }
@@ -20,18 +21,17 @@ namespace MedicalProduct.BL.Controller.Tests
         [TestMethod()]
         public void SaveTest()
         {
-            var medicineController = new MedicineController("Test",5);
+            var medicineController = new MedicineController("Test2",5);
             string name = Guid.NewGuid().ToString();
 
-            var componentController = new ComponentController(name);
-            componentController.CurrentComponent.MedicineId = medicineController.CurrentMedicine.Id;
+            var componentController = new ComponentController(medicineController.CurrentMedicine, name);
             componentController.Save();
 
             string name2 = Guid.NewGuid().ToString();
 
-            var componentController2 = new ComponentController(name2);
-            componentController2.CurrentComponent.MedicineId = medicineController.CurrentMedicine.Id;
-            var result = componentController2.Components.SingleOrDefault(r => r.Name == name);
+            var componentController2 = new ComponentController(medicineController.CurrentMedicine, name2);
+
+            var result = componentController2.Components.FirstOrDefault(r => r.Name == name);
 
             Assert.AreEqual(result.ToString(), componentController.CurrentComponent.ToString());
         }
@@ -39,11 +39,12 @@ namespace MedicalProduct.BL.Controller.Tests
         [TestMethod()]
         public void GetAllComponentsTest()
         {
+            var med = new MedicineController("Test3", 9);
             string сomponentName = Guid.NewGuid().ToString();
 
-            var componentController = new ComponentController(сomponentName);
+            var componentController = new ComponentController(med.CurrentMedicine, сomponentName);
 
-            Assert.AreEqual(true, componentController.IsNewComponent);
+            Assert.AreEqual(med.CurrentMedicine.Id, componentController.CurrentComponent.MedicineId);
         }
     }
 }

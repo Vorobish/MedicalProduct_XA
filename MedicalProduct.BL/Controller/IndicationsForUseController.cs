@@ -1,7 +1,6 @@
 ﻿using MedicalProduct.BL.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MedicalProduct.BL.Controller
 {
@@ -26,9 +25,9 @@ namespace MedicalProduct.BL.Controller
         /// </summary>
         public IndicationsForUseController(Medicine medicine, string name)
         {
-            if (string.IsNullOrWhiteSpace(name))
+            if (string.IsNullOrWhiteSpace(name) || name.Length > 100)
             {
-                throw new ArgumentNullException("Наименование показания к применению не может быть пустым.", nameof(name));
+                throw new ArgumentNullException("Наименование недуга не может быть пустым и не должно превышать 100 знаков.", nameof(name));
             }
             IndicationsForUses = GetAllIndicationsForUses();
             CurrentIndicationsForUse = new IndicationsForUse(medicine, name);
