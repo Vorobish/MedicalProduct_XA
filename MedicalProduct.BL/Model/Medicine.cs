@@ -41,7 +41,7 @@ namespace MedicalProduct.BL.Model
             {
                 throw new ArgumentNullException("Наименование изделия медицинского назначения не может быть пустым.",nameof(name));
             }
-        if(number < 0 || number > 200)
+            if(number < 0 || number > 200)
             {
                 throw new ArgumentException("Количество не может быть отрицательным и не должно превышать 300 ед.", nameof(number));
             }

@@ -22,6 +22,8 @@ namespace MedicalProduct.BL.Model
         /// ID Пользователя, совершившего покупку.
         /// </summary>
         public int UserId { get; set; }
+        public string UserName { get; set; }
+
         /// <summary>
         /// Пользователь, совершивший покупку.
         /// </summary>
@@ -33,31 +35,20 @@ namespace MedicalProduct.BL.Model
         /// </summary>
         /// <param name="user">Пользователь регистрирующий покупку.</param>
         /// <param name="moment">Дата покупки.</param>
-        //public Purchase(User user, DateTime moment)
-        //{
-        //    User = user ?? throw new ArgumentException("Не удалось идентифицировать пользователя.",nameof(user));
-        //    if(moment < DateTime.Parse("01.01.2020") || moment > DateTime.Now)
-        //    {
-        //        throw new ArgumentException("Недопустимая дата покупки.", nameof(moment));
-        //    }
-        //    Moment = moment;
-        //}
-
-        //public Purchase(User user, DateTime moment, Dictionary<Medicine, int> medicines, decimal total)
-        //{
-        //    User = user ?? throw new ArgumentException("Не удалось идентифицировать пользователя.", nameof(user));
-        //    if (moment < DateTime.Parse("01.01.2020") || moment > DateTime.Now)
-        //    {
-        //        throw new ArgumentException("Недопустимая дата покупки.", nameof(moment));
-        //    }
-        //    Moment = moment;
-        //    Medicines = medicines;
-        //    Total = total;
-        //}
+        public Purchase(User user, DateTime moment)
+        {
+            if (moment < DateTime.Parse("01.01.2020") || moment > DateTime.Now)
+            {
+                throw new ArgumentException("Недопустимая дата покупки.", nameof(moment));
+            }
+            Moment = moment;
+            UserId = user.Id;
+            UserName = user.Name;
+        }
 
         public override string ToString()
         {
-            return $"Покупка №: {Id}, дата покупки: {Moment}, сумма чека: {Total}\n";
+            return $"Покупка №: {Id} ({UserName}), дата покупки: {Moment}, сумма чека: {Total}\n";
         }
     }
 

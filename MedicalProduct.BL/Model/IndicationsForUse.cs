@@ -20,13 +20,14 @@ namespace MedicalProduct.BL.Model
         /// Создание недуга.
         /// </summary>
         /// <param name="name">Наименование недуга.</param>
-        public IndicationsForUse(string name)
+        public IndicationsForUse(Medicine medicine, string name)
         {
-            if(string.IsNullOrWhiteSpace(name))
+            if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentNullException("Наименование недуга не может быть пустым.",nameof(name));
             }
             Name = name;
+            MedicineId = medicine.Id;
         }
         public override string ToString()
         {

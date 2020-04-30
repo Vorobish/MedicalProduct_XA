@@ -20,13 +20,14 @@ namespace MedicalProduct.BL.Model
         /// Создание нового компонента.
         /// </summary>
         /// <param name="name">Наименование компонента.</param>
-        public Component(string name)
+        public Component(Medicine medicine, string name)
         {
             if(string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentNullException("Наименование компонента не может быть пустым.", nameof(name));
             }
             Name = name;
+            MedicineId = medicine.Id;
         }
         public override string ToString()
         {

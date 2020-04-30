@@ -19,28 +19,21 @@ namespace MedicalProduct.BL.Controller
         /// Текущий недуг.
         /// </summary>
         public IndicationsForUse CurrentIndicationsForUse { get; set; }
-        public bool IsNewIndicationsForUse { get; set; } = false;
         public IndicationsForUseController() { }
 
         /// <summary>
         /// Контроль добавления показаний к применению.
         /// </summary>
-        public IndicationsForUseController(string name)
+        public IndicationsForUseController(Medicine medicine, string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentNullException("Наименование показания к применению не может быть пустым.", nameof(name));
             }
-
             IndicationsForUses = GetAllIndicationsForUses();
-
-            CurrentIndicationsForUse = IndicationsForUses.FirstOrDefault(c => c.Name == name);
-            if (CurrentIndicationsForUse == null)
-            {
-                CurrentIndicationsForUse = new IndicationsForUse(name);
-                IndicationsForUses.Add(CurrentIndicationsForUse);
-                IsNewIndicationsForUse = true;
-            }
+            CurrentIndicationsForUse = new IndicationsForUse(medicine, name);
+            IndicationsForUses.Add(CurrentIndicationsForUse);
+            Save();
         }
         /// <summary>
         /// Сохранение нового показания к применению.

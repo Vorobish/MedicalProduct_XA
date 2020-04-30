@@ -20,16 +20,7 @@ namespace MedicalProduct.BL.Controller
                 db.SaveChanges();
             }
         }
-        /// <summary>
-        /// Сохранение изменений.
-        /// </summary>
-        protected void Saver()
-        {
-            using (var db = new MedicalProductContext())
-            {
-                db.SaveChanges();
-            }
-        }
+
         /// <summary>
         /// Получение элементов таблицы.
         /// </summary>

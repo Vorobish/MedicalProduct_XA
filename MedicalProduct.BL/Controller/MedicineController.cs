@@ -34,7 +34,7 @@ namespace MedicalProduct.BL.Controller
 
             Medicines = GetAllMedicines();
 
-            CurrentMedicine = Medicines.FirstOrDefault(c => c.Name == medicineName);
+            CurrentMedicine = Medicines.SingleOrDefault(c => c.Name == medicineName);
             if (CurrentMedicine == null)
             {
                 CurrentMedicine = new Medicine(medicineName, number);
@@ -44,8 +44,9 @@ namespace MedicalProduct.BL.Controller
             }
             else
             {
-                CurrentMedicine.Number = СhangeAddNumber(number);
-                Saver();
+                var numCurr = GetNumber();
+                var N = numCurr + number;
+                ChangeNumber(CurrentMedicine.Id, N);
             }
         }
         /// <summary>
@@ -72,17 +73,16 @@ namespace MedicalProduct.BL.Controller
             return Load<Medicine>();
         }
         /// <summary>
-        /// Изменение количества единиц препарата в аптечке.
+        /// Получить количество единиц препарата в аптечке.
         /// </summary>
         /// <param name="num">Количество прибавляемых единиц.</param>
         /// <returns>Итоговое количество единиц препарата в аптечке.</returns>
-        private int СhangeAddNumber(int num)
+        private int GetNumber()
         {
             using (var db = new MedicalProductContext())
             {
-                int number = db.Entry(CurrentMedicine).Property(n=> n.Number).CurrentValue;
-                int N = num + number;
-                return db.Entry(CurrentMedicine).Property(u => u.Number).CurrentValue = N;
+                int num = db.Entry(CurrentMedicine).Property(n=> n.Number).CurrentValue;
+                return num;
             };
         }
         /// <summary>
@@ -116,7 +116,7 @@ namespace MedicalProduct.BL.Controller
 
         public void ChangeNumber(int id, int num)
         {
-            if (num <= 0 || num > 600)
+            if (num < 0 || num > 600)
             {
                 throw new ArgumentException("Количество не может быть отрицательным, и не должно быть больше 600 единиц.", nameof(num));
             }
@@ -131,6 +131,15 @@ namespace MedicalProduct.BL.Controller
                 db.SaveChanges();
                 Console.Write(med.ToString());
             };
+        }
+
+        /// <summary>
+        /// Отчистить таблицу лекарств.
+        /// </summary>
+        public void RemoveRange()
+        {
+            RemoveRange<Medicine>();
+            Console.WriteLine("Все лекарства удалены.");
         }
     }
 }

@@ -1,12 +1,21 @@
 ﻿using MedicalProduct.BL.Model;
 using System;
+using System.Collections.Generic;
 
 namespace MedicalProduct.BL.Controller
 {
-    public class PositionController
+    public class PositionController : DataBaseManager
     {
         public PositionPurchase CurrentPosition { get; set; }
+        public List<PositionPurchase> Positions { get; set; }
         public PositionController() { }
+        /// <summary>
+        /// Контроль создания позиции покупки.
+        /// </summary>
+        /// <param name="purchase">Покупка, которой принадлежит позация.</param>
+        /// <param name="medicine">Препарат позиции.</param>
+        /// <param name="price">Цена препарата.</param>
+        /// <param name="quantity">Количество купленных упаковок.</param>
         public PositionController(Purchase purchase, Medicine medicine, decimal price, int quantity)
         {
             if (price < 0M || price > 500000M)
@@ -18,9 +27,33 @@ namespace MedicalProduct.BL.Controller
                 throw new ArgumentException("Количество упаковок не может быть отрицательным, и не должно превышать 100 штук.", nameof(quantity));
             }
             CurrentPosition = new PositionPurchase(purchase, medicine, price, quantity);
-
-            CurrentPosition.TotalPosition = price * quantity;
-            CurrentPosition.PurchaseId = purchase.Id;
+            Positions = GetAllPosition();
+            Positions.Add(CurrentPosition);
+        }
+        /// <summary>
+        /// Сохранение позиции в БД.
+        /// </summary>
+        public void Save()
+        {
+            Save(CurrentPosition);
+        }
+        /// <summary>
+        /// Получение списка всех позиций всех покупок.
+        /// </summary>
+        /// <returns>Список позиций.</returns>
+        private List<PositionPurchase> GetAllPosition()
+        {
+            return Load<PositionPurchase>();
+        }
+        public void Show()
+        {
+            Console.WriteLine("Общий список позиций:");
+            Show<PositionPurchase>();
+        }
+        public void RemoveRange()
+        {
+            RemoveRange<PositionPurchase>();
+            Console.WriteLine("Все позиции удалены.");
         }
     }
 }

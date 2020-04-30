@@ -18,13 +18,12 @@ namespace MedicalProduct.BL.Controller
         /// Текущий компонент.
         /// </summary>
         public Component CurrentComponent { get; set; }
-        public bool IsNewComponent { get; set; } = false;
         public ComponentController() { }
 
         /// <summary>
         /// Контроль добавления компонентов.
         /// </summary>
-        public ComponentController(string componentName)
+        public ComponentController(Medicine medicine, string componentName)
         {
             if (string.IsNullOrWhiteSpace(componentName))
             {
@@ -32,14 +31,9 @@ namespace MedicalProduct.BL.Controller
             }
 
             Components = GetAllComponents();
-
-            CurrentComponent = Components.FirstOrDefault(c => c.Name == componentName);
-            if (CurrentComponent == null)
-            {
-                CurrentComponent = new Component(componentName);
-                Components.Add(CurrentComponent);
-                IsNewComponent = true;
-            }
+            CurrentComponent = new Component(medicine, componentName);
+            Components.Add(CurrentComponent);
+            Save();
         }
         /// <summary>
         /// Сохранение нового компонента.

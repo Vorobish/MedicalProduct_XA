@@ -9,10 +9,7 @@ namespace MedicalProduct.BL.Model
     public class PositionPurchase
     {
         public int Id { get; set; }
-        /// <summary>
-        /// Покупаемый препарат.
-        /// </summary>
-        public Medicine Medicine { get; set; }
+        public string MedicineName { get; set; }
         /// <summary>
         /// Цена за 1 упаковку.
         /// </summary>
@@ -35,8 +32,6 @@ namespace MedicalProduct.BL.Model
         /// <param name="quantity">Количество упаковок.</param>
         public PositionPurchase(Purchase purchase, Medicine medicine, decimal price, int quantity)
         {
-            Purchase = purchase ?? throw new ArgumentException("Покупка не найдена.", nameof(purchase));
-            Medicine = medicine ?? throw new ArgumentException("Изделие медицинского назначения не идентифицировано.", nameof(medicine));
             if(price < 0M || price > 1000000M)
             {
                 throw new ArgumentException("Цена за упаковку не может быть отрицательной и не должна превышать 1 000 000-00 рублей.", nameof(price));
@@ -45,12 +40,15 @@ namespace MedicalProduct.BL.Model
             {
                 throw new ArgumentException("Количество упаковок не может быть отрицательным, либо равным нулю и не должно превышать 30.", nameof(quantity));
             }
+            PurchaseId = purchase.Id;
             Price = price;
             Quantity = quantity;
+            TotalPosition = Price * Quantity;
+            MedicineName = medicine.Name;
         }
         public override string ToString()
         {
-            return $"{Medicine.Name}: {Price} руб. * {Quantity} уп. = {TotalPosition} руб.\n";
+            return $" Покупка {PurchaseId}. {MedicineName} : {Price} руб. * {Quantity} уп. = {TotalPosition} руб.\n";
         }
     }
 }

@@ -33,7 +33,7 @@ namespace MedicalProduct.BL.Controller
 
             Users = GetAllUsers();
 
-            CurrentUser = Users.FirstOrDefault(c => c.Name == userName);
+            CurrentUser = Users.SingleOrDefault(c => c.Name == userName);
             if (CurrentUser == null)
             {
                 CurrentUser = new User(userName);

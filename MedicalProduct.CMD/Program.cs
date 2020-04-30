@@ -10,6 +10,26 @@ namespace MedicalProduct.CMD
     {
         static void Main(string[] args)
         {
+            //var u = new UserController();
+            //u.Show();
+            //u.RemoveRange();
+            //var pur = new PurchaseController();
+            //pur.Show();
+            //pur.RemoveRange();
+            //var med = new MedicineController();
+            //med.Show();
+            //med.RemoveRange();
+            //var comp = new ComponentController();
+            //comp.Show();
+            //comp.RemoveRange();
+            //var ind = new IndicationsForUseController();
+            //ind.Show();
+            //ind.RemoveRange();
+            //var pos = new PositionController();
+            //pos.Show();
+            //pos.RemoveRange();
+
+
             Console.WriteLine("Вас приветствует приложение MedicalProduct!");
             Console.WriteLine("Введите, пожалуйста, Ваше имя.");
             var userName = Console.ReadLine();
@@ -25,10 +45,10 @@ namespace MedicalProduct.CMD
                 Console.WriteLine("Какое действие Вы хотите выполнить?");
                 Console.WriteLine("A - Закрыть приложение.");
                 Console.WriteLine("B - Посмотреть список изделий медицинского назначения.");
-                Console.WriteLine("С - Добавить новую покупки.НЕТ");
+                Console.WriteLine("С - Добавить новую покупку.");
                 Console.WriteLine("D - Найти и посмотреть конкретное изделие медицинского назначения по Id.");
                 Console.WriteLine("E - Посмотреть список покупок.");
-                Console.WriteLine("F - Найти и посмотреть конкретную покупку.НЕТ");
+                Console.WriteLine("F - Найти и посмотреть конкретную покупку.");
                 Console.WriteLine("G - Добавить изделие медицинского назначения в аптечку.");
                 Console.WriteLine("H - Изменить количество единиц препарата в аптечке.");
                 Console.WriteLine();
@@ -49,6 +69,52 @@ namespace MedicalProduct.CMD
                         medicineShow.Show();
                         break;
                     #endregion
+                    #region С - Добавить новую покупку.НЕЕЕЕЕЕЕЕТ
+                    case ConsoleKey.C:
+                        var moment = ParseDate("покупки.");
+                        var purchaseController = new PurchaseController(userController.CurrentUser, moment);
+                        var numberPosition = ParseInt("Количество препаратов в чеке.");
+                        for (var j = 0; j < numberPosition; j++)
+                        {
+                            Console.WriteLine($"Заполняем {j+1} позицию.");
+                            Console.WriteLine("Введите наименование препарата.");
+                            var medNamePos = Console.ReadLine();
+                            var numPos = ParseInt("Количество единиц в упаковке.");
+                            var price = ParseDecimal("Цена за 1 упаковку.");
+                            var quantity = ParseInt("Количество купленных упаковок.");
+                            var numTotal = numPos * quantity;
+                            var medContrPos = new MedicineController(medNamePos, numTotal);
+                            #region Заполнение компонентов и показаний к применению, если лекарство новое.
+                            if (medContrPos.IsNewMedicine == true)
+                            {
+                                //Компоненты.
+                                Console.WriteLine("Заполняем состав медицинского изделия.");
+                                var numberOfComponents = ParseInt("Количество компонентов в составе.");
+                                for (var i = 0; i < numberOfComponents; i++)
+                                {
+                                    Console.WriteLine("Введите наименование компонента.");
+                                    var componentName = Console.ReadLine();
+                                    var componentController = new ComponentController(medContrPos.CurrentMedicine, componentName);
+                                }
+                                //Показания к применению.
+                                Console.WriteLine("Заполняем показания к применению.");
+                                var numberOfIndications = ParseInt("Количество показаний к применению.");
+                                for (var i = 0; i < numberOfIndications; i++)
+                                {
+                                    Console.WriteLine("Введите наименование показания.");
+                                    string indicationName = Console.ReadLine();
+                                    var indicationController = new IndicationsForUseController(medContrPos.CurrentMedicine, indicationName);
+                                }
+                            }
+                            #endregion
+                            var positionContr = new PositionController(purchaseController.CurrentPurchase, medContrPos.CurrentMedicine, price, quantity);
+                            positionContr.Save();
+                        }
+                        purchaseController.Total(purchaseController.CurrentPurchase.Id);
+                        Console.WriteLine("Покупка создана.");
+                        purchaseController.ShowOne(purchaseController.CurrentPurchase.Id);
+                        break;
+                    #endregion
                     #region D - Найти и посмотреть конкретное изделие медицинского назначения.
                     case ConsoleKey.D:
                         var currentMedicineID = ParseInt("Id изделия медицинского назначения.");
@@ -60,6 +126,13 @@ namespace MedicalProduct.CMD
                     case ConsoleKey.E:
                         var purchase = new PurchaseController();
                         purchase.Show();
+                        break;
+                    #endregion
+                    #region F - Найти и посмотреть конкретную покупку.
+                    case ConsoleKey.F:
+                        var currentPurchaseID = ParseInt("Id покупки.");
+                        var showOnePur = new PurchaseController();
+                        showOnePur.ShowOne(currentPurchaseID);
                         break;
                     #endregion
                     #region G - Добавить изделие медицинского назначения в аптечку.
@@ -78,9 +151,7 @@ namespace MedicalProduct.CMD
                             {
                                 Console.WriteLine("Введите наименование компонента.");
                                 var componentName = Console.ReadLine();
-                                var componentController = new ComponentController(componentName);
-                                componentController.CurrentComponent.MedicineId = medicineController.CurrentMedicine.Id;
-                                componentController.Save();
+                                var componentController = new ComponentController(medicineController.CurrentMedicine, componentName);
                             }
                             //Показания к применению.
                             Console.WriteLine("Заполняем показания к применению.");
@@ -89,15 +160,9 @@ namespace MedicalProduct.CMD
                             {
                                 Console.WriteLine("Введите наименование показания.");
                                 string indicationName = Console.ReadLine();
-                                var indicationController = new IndicationsForUseController(indicationName);
-                                indicationController.CurrentIndicationsForUse.MedicineId = medicineController.CurrentMedicine.Id;
-                                indicationController.Save();
+                                var indicationController = new IndicationsForUseController(medicineController.CurrentMedicine, indicationName);
                             }
                             Console.WriteLine($"{medicineController.CurrentMedicine.Name} создан. ");
-                        }
-                        else
-                        {
-                            Console.WriteLine($"Препарат добавлен. Итоговое количество = {medicineController.CurrentMedicine.Number}");
                         }
                         break;
                     #endregion
