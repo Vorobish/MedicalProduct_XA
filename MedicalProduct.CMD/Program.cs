@@ -28,6 +28,7 @@ namespace MedicalProduct.CMD
                 Console.WriteLine("F - Найти и посмотреть конкретную покупку.");
                 Console.WriteLine("G - Добавить изделие медицинского назначения в аптечку.");
                 Console.WriteLine("H - Изменить количество единиц препарата в аптечке.");
+                Console.WriteLine("I - Удалить все данные.");
                 Console.WriteLine();
 
                 var key = Console.ReadKey();
@@ -149,6 +150,25 @@ namespace MedicalProduct.CMD
                         var changeNumber = ParseInt("Итоговое количество единиц препарата.");
                         var change = new MedicineController();
                         change.ChangeNumber(medicineID, changeNumber);
+                        break;
+                    #endregion
+                    #region I - Удалить все данные.
+                    case ConsoleKey.I:
+                        var u = new UserController();
+                        u.RemoveRange();
+                        var pu = new PurchaseController();
+                        pu.RemoveRange();
+                        var po = new PositionController();
+                        po.RemoveRange();
+                        var m = new MedicineController();
+                        m.RemoveRange();
+                        var c = new ComponentController();
+                        c.RemoveRange();
+                        var ind = new IndicationsForUseController();
+                        ind.RemoveRange();
+                        Console.WriteLine("Необходимо перезапустить приложение.");
+                        Console.ReadLine();
+                        Environment.Exit(0);
                         break;
                         #endregion
                 }
